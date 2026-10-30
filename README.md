@@ -4,7 +4,6 @@ This starter project follows the attached synopsis: text features (TF-IDF n-gram
 
 ## Important limitations
 
-- No CSV was attached with this request, so the model is **not trained yet**. You must supply a dataset and map its actual column names and labels.
 - A model trained on one dataset may not generalize to Amazon, Yelp, Google Maps, etc. Website DOMs also vary; the included generic content script is a starter and will need site-specific selectors for reliable review detection.
 - The displayed 0–10 score is the model's estimated probability of the dataset's chosen `human` class multiplied by 10. It is **not a verified truth score**, and logistic-regression probabilities may need calibration.
 - The extension currently sends review text to the local API at `127.0.0.1:8000`. Do not deploy it to users without privacy, security, CORS, hosting, and data-handling review.
