@@ -26,7 +26,7 @@ ARTIFACT_DIR = Path(__file__).resolve().parent / "artifacts"
 
 def parse_args():
     p=argparse.ArgumentParser()
-    p.add_argument("--csv", required=True, help="Path to CSV dataset")
+    p.add_argument("--data", required=True, help="Path to dataset")
     p.add_argument("--text-col", default="review_text")
     p.add_argument("--label-col", default="label")
     p.add_argument("--human-label", default="human", help="Exact dataset label meaning human/genuine")
@@ -86,10 +86,16 @@ def build_features(df, args):
     return texts, numeric
 
 def main():
-    args=parse_args()
-    path=Path(args.csv)
-    if not path.exists(): raise FileNotFoundError(f"CSV not found: {path}")
-    df=pd.read_csv(path)
+    args = parse_args()
+    path = Path(args.data)
+
+    if not path.exists():
+        raise FileNotFoundError(f"Dataset not found: {path}")
+
+    if path.suffix.lower() in [".xlsx", ".xls"]:
+        df = pd.read_excel(path)
+    else:
+        df = pd.read_csv(path)
     for col in (args.text_col,args.label_col):
         if col not in df.columns:
             raise ValueError(f"Required column '{col}' missing. Available columns: {list(df.columns)}")
